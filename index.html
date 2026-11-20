@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product Design Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday study tool, calm and dense, for someone cramming before interviews
+   IDEA a designer's field guide plus a deck of index cards you drill out loud
+   PICTURE the practice card itself, large on a green field, with the stack behind it
+   COLOUR white ground, ink #0b0b10, signal green #00a862 field, mist #eafaf2; night #07130d
+   TYPE Space Grotesk for terms and titles, Inter for reading
+   LAYOUT laptop: title row, then card left and progress right on the green band, then sticky search and the glossary in two columns; phone: title, card, controls, progress, glossary in one column */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#07130d);
+--ink:light-dark(#0b0b10,#e8f2ec);
+--soft:light-dark(#3f4642,#b4c4bb);
+--mist:light-dark(#eafaf2,#0d2018);
+--surface:light-dark(#ffffff,#0f1c16);
+--line:light-dark(#d5e6dd,#1f362b);
+--green:light-dark(#00a862,#22c27c);
+--field:light-dark(#00a862,#0b3825);
+--fieldink:light-dark(#0b0b10,#e8f2ec);
+--deep:light-dark(#0b0b10,#e8f2ec);
+--deepink:light-dark(#ffffff,#07130d)}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:150px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,.term{font-family:"Space Grotesk",Inter,system-ui,sans-serif;letter-spacing:-.02em;line-height:1.05;margin:0;text-wrap:balance}
+p{margin:0}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.top .wrap{display:grid;gap:24px;grid-template-columns:minmax(0,1fr) auto;align-items:end}
+.top h1{font-size:clamp(34px,5vw,52px);font-weight:700}
+.top p{margin-top:14px;max-width:60ch;color:var(--soft);font-size:17px}
+.jump{display:flex;gap:20px;margin-top:18px;flex-wrap:wrap}
+.jump a{color:var(--ink);font-weight:600;text-underline-offset:4px}
+.mode{display:grid;gap:8px;justify-items:start}
+.mode span{font-size:14px;color:var(--soft)}
+.seg{display:inline-flex;background:var(--mist);border-radius:999px;padding:4px}
+.seg button{border:0;background:none;border-radius:999px;padding:10px 18px;min-height:44px;font-weight:600;transition:background .15s,color .15s}
+.seg button[aria-pressed=true]{background:var(--deep);color:var(--deepink)}
+.deck{background:var(--field);color:var(--fieldink)}
+.deck .wrap{display:grid;gap:clamp(24px,4vw,56px);grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);align-items:start}
+.stack{position:relative;padding:14px 18px 0 0}
+.stack::before,.stack::after{content:"";position:absolute;inset:14px 18px 0 0;border-radius:6px;background:color-mix(in srgb,var(--surface) 55%,var(--field))}
+.stack::before{transform:translate(14px,-12px) rotate(1.6deg)}
+.stack::after{transform:translate(7px,-6px) rotate(.7deg);background:color-mix(in srgb,var(--surface) 78%,var(--field))}
+.card{position:relative;z-index:1;background:var(--surface);color:var(--ink);border-radius:6px;padding:clamp(22px,3vw,40px);min-height:540px;display:flex;flex-direction:column;gap:18px}
+.card.in{animation:slide .24s cubic-bezier(.2,.8,.2,1)}
+@keyframes slide{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
+.meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:14px;color:var(--soft)}
+.meta b{color:var(--ink);font-weight:600}
+.card .term{font-size:clamp(32px,4.4vw,52px);font-weight:700}
+.prompt{color:var(--soft);font-size:17px}
+.ans{display:grid;gap:14px;animation:rise .2s ease-out}
+@keyframes rise{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+.lab{display:block;font-size:13px;font-weight:600;color:var(--soft);margin-bottom:2px}
+.say{background:var(--mist);border-radius:4px;padding:12px 14px}
+.say q{quotes:none;font-weight:500}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+.btn{border:2px solid var(--ink);background:none;border-radius:999px;padding:10px 20px;min-height:44px;font-weight:600;transition:transform .1s,background .15s}
+.btn:active{transform:scale(.97)}
+.btn.pri{background:var(--deep);color:var(--deepink);border-color:var(--deep)}
+.btn.pri:hover{background:color-mix(in srgb,var(--deep) 85%,var(--green))}
+.btn.ghost{border-color:transparent;text-decoration:underline;text-underline-offset:4px;padding-inline:10px}
+.btn:hover{background:var(--mist)}
+.keys{font-size:13px;color:var(--soft)}
+@media(min-width:900px){.prog{position:sticky;top:24px}}
+.prog h2{font-size:28px;font-weight:600}
+.prog>p{margin:8px 0 18px;font-size:15px}
+.rows{display:grid;gap:2px 10px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.pick{display:none}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 4.2em;gap:4px 12px;align-items:center;border:0;background:none;text-align:left;padding:7px 10px;border-radius:4px;min-height:40px}
+.row:hover{background:color-mix(in srgb,var(--fieldink) 8%,transparent)}
+.row[aria-pressed=true]{background:var(--surface);color:var(--ink)}
+.row .n{font-size:14px;font-weight:500;line-height:1.3}
+.row .c{font-size:13px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bar{grid-column:1/-1;height:6px;border-radius:3px;background:color-mix(in srgb,var(--fieldink) 16%,transparent);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--fieldink);border-radius:3px;transition:width .3s}
+.row[aria-pressed=true] .bar i{background:var(--green)}
+.tools{background:var(--bg);padding-block:16px;z-index:5}
+@media(min-width:900px){.tools{position:sticky;top:0}}
+.tools .wrap{display:grid;gap:12px}
+.search{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.search input{flex:1 1 280px;font-size:16px;padding:12px 16px;min-height:48px;border:2px solid var(--line);border-radius:999px;background:var(--surface)}
+.search input:focus{border-color:var(--green);outline:0}
+.found{font-size:14px;color:var(--soft)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.chip{flex:none;border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;min-height:40px;font-size:14px;font-weight:500;white-space:nowrap}
+.chip[aria-pressed=true]{background:var(--deep);color:var(--deepink);border-color:var(--deep)}
+.chip small{opacity:.7;margin-left:4px;font-size:13px}
+.list{padding-top:8px}
+.cat{margin-bottom:clamp(56px,7vw,96px)}
+.cathead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:end;margin-bottom:22px}
+.cathead h2{font-size:clamp(28px,3.4vw,40px);font-weight:700}
+.cathead p{grid-column:1;color:var(--soft);max-width:70ch;font-size:16px}
+.cathead .btn{grid-row:1/3;grid-column:2;align-self:center}
+.grid{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:1100px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.t{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px 22px;display:grid;gap:12px;align-content:start}
+.t.known{background:var(--mist);border-color:transparent}
+.th{display:flex;gap:12px;justify-content:space-between;align-items:start}
+.t h3{font-size:22px;font-weight:600;padding-top:6px}
+.ic{display:flex;gap:4px;flex:none}
+.ib{border:0;background:none;border-radius:999px;width:44px;height:44px;display:grid;place-items:center;color:var(--soft)}
+.ib:hover{background:var(--mist);color:var(--ink)}
+.ib[aria-pressed=true]{color:var(--green)}
+.ib svg{width:22px;height:22px}
+.t .lab{margin-bottom:0}
+.t p{font-size:16px}
+.t .tx{color:var(--soft)}
+.sayrow{display:flex;gap:10px;align-items:start;background:var(--mist);border-radius:4px;padding:10px 12px}
+.t.known .sayrow{background:var(--surface)}
+.sayrow p{flex:1;font-weight:500}
+.copy{flex:none;border:0;background:none;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:4px 6px;min-height:32px;color:var(--soft)}
+.like{border-radius:4px;background:var(--mist);padding:12px 14px}
+.t .like{background:color-mix(in srgb,var(--green) 9%,var(--surface))}
+.t.known .like{background:var(--surface)}
+.exs{display:grid;gap:14px;margin-top:4px}
+.ex{display:grid;gap:4px;padding-top:12px;border-top:1px solid var(--line)}
+.ex:first-child{border-top:0;padding-top:0}
+.ex b{font-family:"Space Grotesk",Inter,sans-serif;font-size:17px;font-weight:600;line-height:1.25}
+.ex .why{color:var(--soft);font-size:15px}
+.ex .why strong{color:var(--ink);font-weight:600}
+.warn{display:inline-block;font-family:Inter,sans-serif;font-size:12px;font-weight:600;line-height:1;padding:5px 9px;border-radius:999px;background:light-dark(#ffe3dd,#4a1d16);color:light-dark(#8a2414,#ffc4b8);margin-right:8px;vertical-align:2px}
+.card .exs{gap:12px}
+.card .ex b{font-size:16px}
+.empty{padding:48px 0 96px;display:grid;gap:14px;justify-items:start}
+.empty h2{font-size:32px}
+.play{background:var(--deep);color:var(--deepink)}
+.play h2{font-size:clamp(32px,4vw,48px);font-weight:700}
+.play .lead{margin:12px 0 40px;max-width:62ch;font-size:17px;opacity:.85}
+.pgrid{display:grid;gap:clamp(32px,5vw,64px);grid-template-columns:repeat(2,minmax(0,1fr))}
+.play h3{font-size:24px;font-weight:600;margin-bottom:16px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.steps b{display:block;font-family:"Space Grotesk",Inter,sans-serif;font-size:18px;font-weight:600}
+.steps span{opacity:.8;font-size:15px}
+.swap{width:100%;border-collapse:collapse;font-size:15px}
+.swap th{text-align:left;font-weight:600;padding:0 12px 10px 0;opacity:.75}
+.swap td{padding:12px 12px 12px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--deepink) 18%,transparent)}
+.swap td:first-child{opacity:.7;width:38%}
+.qs{margin:0;padding-left:20px;display:grid;gap:10px}
+.avoid{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.avoid span{border:2px solid color-mix(in srgb,var(--deepink) 30%,transparent);border-radius:999px;padding:4px 12px;font-size:14px}
+.full{grid-column:1/-1}
+footer{font-size:14px;color:var(--soft)}
+footer p+p{margin-top:6px}
+@media(max-width:899px){.deck .wrap{grid-template-columns:minmax(0,1fr)}.rows{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8px}.pgrid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.top .wrap{grid-template-columns:minmax(0,1fr)}.seg{width:100%}.seg button{flex:1;padding-inline:8px}.stack{padding:10px 10px 0 0}.stack::before,.stack::after{inset:10px 10px 0 0}.card{min-height:0}.pick{display:inline-flex;margin-bottom:12px;border-color:var(--fieldink)}.rows{display:none;grid-template-columns:minmax(0,1fr)}.rows.open{display:grid}.cathead{grid-template-columns:minmax(0,1fr)}.cathead .btn{grid-row:auto;grid-column:1;justify-self:start}.t{padding:16px}.swap thead{display:none}.swap tr{display:grid;padding:10px 0;border-top:1px solid color-mix(in srgb,var(--deepink) 18%,transparent)}.swap td{border:0;padding:2px 0;width:auto!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="band top">
+<div class="wrap">
+<div>
+<h1>Product design field guide</h1>
+<p id="intro">Every term you’ll hear in a product or UX design interview, in plain words and in the technical version, with real products that use it and a sentence you can say out loud to a senior designer or PM.</p>
+<nav class="jump" aria-label="Sections"><a href="#practice">Practise</a><a href="#glossary">Glossary</a><a href="#playbook">Interview playbook</a></nav>
+</div>
+<div class="mode">
+<span id="modelab">Explain each term</span>
+<div class="seg" role="group" aria-labelledby="modelab">
+<button type="button" data-mode="both" aria-pressed="true">Both</button>
+<button type="button" data-mode="p" aria-pressed="false">Plain</button>
+<button type="button" data-mode="x" aria-pressed="false">Technical</button>
+</div>
+</div>
+</div>
+</header>
+
+<section class="band deck" id="practice" aria-label="Practice deck">
+<div class="wrap">
+<div class="stack"><article class="card" id="card" aria-live="polite"></article></div>
+<aside class="prog">
+<h2>Your progress</h2>
+<p id="tally"></p>
+<button class="btn pick" id="pick" type="button" aria-expanded="false" aria-controls="rows">Choose a topic to drill</button>
+<div class="rows" id="rows"></div>
+</aside>
+</div>
+</section>
+
+<div class="band tools" id="glossary">
+<div class="wrap">
+<div class="search">
+<label for="q" class="found" style="position:absolute;left:-9999px">Search terms</label>
+<input id="q" type="search" placeholder="Search a term, idea or product, e.g. retention, empty state, Swiggy" autocomplete="off">
+<span class="found" id="found"></span>
+</div>
+<div class="chips" id="chips" role="group" aria-label="Filter by topic"></div>
+</div>
+</div>
+
+<main class="band list" style="padding-top:12px"><div class="wrap" id="list"></div></main>
+
+<section class="band play" id="playbook">
+<div class="wrap">
+<h2>Using these words in the room</h2>
+<p class="lead">Knowing the terms gets you through the screen. Using them to explain a decision is what gets you hired. Seniors listen for three things: did you frame the problem, did you name the trade-off, and how will you know it worked.</p>
+<div class="pgrid">
+<div>
+<h3>Answering a design challenge</h3>
+<ol class="steps">
+<li><b>Clarify the brief</b><span>“Before I start, who is this for, and what’s the business goal behind it?”</span></li>
+<li><b>Pick one user and their context</b><span>“I’ll focus on first-time users on a budget Android phone, one-handed, on 4G.”</span></li>
+<li><b>Frame the problem</b><span>Turn the brief into a problem statement or a job to be done. Say it out loud.</span></li>
+<li><b>Define success</b><span>“The North Star is X. My input metric is Y, and my guardrail is Z.”</span></li>
+<li><b>Explore widely, then narrow</b><span>Sketch three different directions quickly. Don’t marry the first.</span></li>
+<li><b>Choose, and name the trade-off</b><span>“I picked B. It’s faster for repeat users, at the cost of discoverability for new ones.”</span></li>
+<li><b>Design the core flow and its states</b><span>Happy path first, then empty, loading, error and edge cases. This is where you stand out.</span></li>
+<li><b>Measure and iterate</b><span>“I’d ship behind a flag to 10% and watch completion and refund rate for two weeks.”</span></li>
+</ol>
+</div>
+<div>
+<h3>Walking through a case study</h3>
+<ol class="steps">
+<li><b>Context and your role</b><span>Team, timeline, what you personally owned. Say “I” for your work, “we” for the team’s.</span></li>
+<li><b>The problem, with a number</b><span>“40% of users dropped at address entry.”</span></li>
+<li><b>What you learned</b><span>The research and the one insight that changed the direction.</span></li>
+<li><b>Decisions and trade-offs</b><span>Two or three key decisions, each with its reason and what you gave up.</span></li>
+<li><b>What shipped</b><span>The flow and its states, not just the hero screen.</span></li>
+<li><b>Outcome</b><span>The metric that moved. If it’s a concept project, say how you would measure it.</span></li>
+<li><b>What you’d do differently</b><span>Honest reflection reads as senior. Defensiveness reads as junior.</span></li>
+</ol>
+</div>
+<div class="full">
+<h3>Say this instead</h3>
+<table class="swap">
+<thead><tr><th>Sounds junior</th><th>Sounds senior</th></tr></thead>
+<tbody>
+<tr><td>“I made it more intuitive.”</td><td>“Task success went from 2 of 5 to 5 of 5 after we moved refunds into order details.”</td></tr>
+<tr><td>“Users will love it.”</td><td>“My hypothesis is that saved addresses cut drop-off. We’ll know from step completion in two weeks.”</td></tr>
+<tr><td>“I made it clean and minimal.”</td><td>“I cut each screen to one primary action to reduce cognitive load on a small screen.”</td></tr>
+<tr><td>“I followed best practices.”</td><td>“I kept the platform’s checkout convention so people don’t have to learn something new.”</td></tr>
+<tr><td>“The PM wanted it.”</td><td>“The business goal was order value. I balanced it with a guardrail on cancellations.”</td></tr>
+<tr><td>“I designed the screens.”</td><td>“I designed the flow, its empty, loading and error states, and the handoff with annotations.”</td></tr>
+<tr><td>“It looks better now.”</td><td>“The hierarchy now leads with the amount, which is what users check first.”</td></tr>
+<tr><td>“I don’t know.”</td><td>“I haven’t worked with that directly. Here’s how I’d approach it.”</td></tr>
+<tr><td>“We did user research.”</td><td>“I ran six interviews and a tree test. The tree test changed where refunds live.”</td></tr>
+</tbody>
+</table>
+</div>
+<div>
+<h3>Questions to ask them</h3>
+<ol class="qs">
+<li>Which metric is this team measured on this year?</li>
+<li>How do design, product and engineering decide when they disagree?</li>
+<li>Is there a design system, and who owns it?</li>
+<li>How does research reach the team: dedicated researchers, or designers?</li>
+<li>What would a great first 90 days look like in this role?</li>
+</ol>
+</div>
+<div>
+<h3>Words to back up or drop</h3>
+<p>These sound empty unless a reason or a number follows them in the same sentence.</p>
+<div class="avoid"><span>intuitive</span><span>seamless</span><span>user-friendly</span><span>clean</span><span>delightful</span><span>modern</span><span>pixel-perfect</span><span>best practice</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="band">
+<div class="wrap">
+<p>Thresholds such as contrast ratios, target sizes and timings come from WCAG 2.2, Apple’s Human Interface Guidelines, Material Design and published research. Check the current version before quoting an exact number in an interview.</p>
+<p>Your known and starred terms are saved in this browser only.</p>
+</div>
+</footer>
+
+<script src="data.js"></script>
+<script src="ex1.js"></script><script src="ex2.js"></script><script src="ex3.js"></script><script src="ex4.js"></script><script src="ex5.js"></script>
+<script>
+{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const slug=s=>"t-"+s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const catName=Object.fromEntries(C.map(c=>[c[0],c[1]]));
+const store={get(k,d){try{const v=localStorage.getItem("pdfg-"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("pdfg-"+k,JSON.stringify(v))}catch(e){}}};
+let mode=store.get("mode","both"),known=new Set(store.get("known",[])),star=new Set(store.get("star",[])),filter="all",q="",queue=[],shown=false;
+const STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z" fill="FILL" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+const CHECK='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="FILL" stroke="currentColor" stroke-width="1.8"/><path d="M8 12.3l2.7 2.7L16.2 9.5" fill="none" stroke="STROKE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const save=()=>{store.set("known",[...known]);store.set("star",[...star]);store.set("mode",mode)};
+const inFilter=t=>filter==="all"||(filter==="star"?star.has(t[0]):filter==="todo"?!known.has(t[0]):t[1]===filter);
+const explain=(t,small)=>{
+  if(mode==="p")return `<p>${esc(t[2])}</p>`;
+  if(mode==="x")return `<p>${esc(t[3])}</p>`;
+  return `<div><span class="lab">Plain</span><p>${esc(t[2])}</p></div><div><span class="lab">Technical</span><p class="${small?"tx":""}">${esc(t[3])}</p></div>`};
+const exHTML=t=>{const e=X[t[0]];if(!e)return `<div><span class="lab">In practice</span><p>${esc(t[4])}</p></div>`;
+  return `<div class="like"><span class="lab">Think of it like</span><p>${esc(e[0])}</p></div>
+  <div><span class="lab">How real products use it</span><div class="exs">${e[1].map(x=>`<div class="ex"><b>${x[3]?'<span class="warn">What not to do</span>':''}${esc(x[0])}</b><p>${esc(x[1])}</p><p class="why"><strong>${x[3]?"Why it’s a problem:":"Why it counts:"}</strong> ${esc(x[2])}</p></div>`).join("")}</div></div>`};
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function build(){const pool=T.filter(inFilter);const todo=pool.filter(t=>!known.has(t[0]));queue=shuffle((todo.length?todo:[]).map(t=>t[0]));shown=false}
+function card(anim){
+  const el=$("#card");const pool=T.filter(inFilter);
+  const label=filter==="all"?"All topics":filter==="star"?"Starred":filter==="todo"?"Still learning":catName[filter];
+  if(!pool.length){el.innerHTML=`<div class="meta"><b>${esc(label)}</b></div><p class="term">Nothing here yet</p><p class="prompt">Star a few terms in the glossary to build your own deck, or pick another topic.</p><div class="acts"><button class="btn pri" data-a="all">Practise all topics</button></div>`;return}
+  if(!queue.length){const k=pool.filter(t=>known.has(t[0])).length;el.innerHTML=`<div class="meta"><b>${esc(label)}</b><span>${k} of ${pool.length} known</span></div><p class="term">You know this whole set</p><p class="prompt">Run through it again to keep it fresh, or pick another topic on the right.</p><div class="acts"><button class="btn pri" data-a="again-all">Practise this set again</button></div>`;return}
+  const t=T.find(x=>x[0]===queue[0]);
+  el.innerHTML=`<div class="meta"><b>${esc(catName[t[1]])}</b><span>${queue.length} left in ${esc(label.toLowerCase()==="all topics"?"all topics":label)}</span></div>
+  <h2 class="term">${esc(t[0])}</h2>
+  ${shown?`<div class="ans">${explain(t,false)}${exHTML(t)}<div class="say"><span class="lab">Say it in the room</span><q>${esc(t[5])}</q></div></div>`:`<p class="prompt">Explain it out loud in one sentence, then give an example from a product you know. Reveal when you’re done.</p>`}
+  <div class="acts">${shown?`<button class="btn pri" data-a="know">I know this</button><button class="btn" data-a="again">Again later</button>`:`<button class="btn pri" data-a="reveal">Reveal</button>`}<button class="btn ghost" data-a="skip">Skip</button></div>
+  <p class="keys">Keys: Space to reveal, 1 again, 2 know it, → skip.</p>`;
+  if(anim){el.classList.remove("in");void el.offsetWidth;el.classList.add("in")}}
+function act(a){
+  if(a==="reveal"){shown=true;card()}
+  else if(a==="know"){known.add(queue.shift());shown=false;save();card(true);side();list()}
+  else if(a==="again"){const c=queue.shift();queue.splice(Math.min(3,queue.length),0,c);shown=false;card(true)}
+  else if(a==="skip"&&queue.length){queue.push(queue.shift());shown=false;card(true)}
+  else if(a==="again-all"){const pool=T.filter(inFilter);queue=shuffle(pool.map(t=>t[0]));shown=false;card(true)}
+  else if(a==="all"){setFilter("all")}}
+function side(){
+  const k=T.filter(t=>known.has(t[0])).length;
+  $("#tally").innerHTML=`${k} of ${T.length} terms known. Pick a topic to drill only that set.`;
+  $("#rows").innerHTML=C.map(c=>{const all=T.filter(t=>t[1]===c[0]),kn=all.filter(t=>known.has(t[0])).length;return `<button class="row" data-f="${c[0]}" aria-pressed="${filter===c[0]}"><span class="n">${esc(c[1])}</span><span class="c">${kn}/${all.length}</span><span class="bar"><i style="width:${all.length?kn/all.length*100:0}%"></i></span></button>`}).join("")}
+function chips(){
+  const base=[["all","All topics",T.length],["todo","Still learning",T.filter(t=>!known.has(t[0])).length],["star","Starred",star.size]];
+  $("#chips").innerHTML=base.concat(C.map(c=>[c[0],c[1],T.filter(t=>t[1]===c[0]).length])).map(([id,n,ct])=>`<button class="chip" data-f="${id}" aria-pressed="${filter===id}">${esc(n)}<small>${ct}</small></button>`).join("")}
+function entry(t){const k=known.has(t[0]),s=star.has(t[0]);
+  return `<article class="t${k?" known":""}" id="${slug(t[0])}"><div class="th"><h3>${esc(t[0])}</h3><div class="ic">
+  <button class="ib" data-star="${esc(t[0])}" aria-pressed="${s}" aria-label="Star ${esc(t[0])}">${STAR.replace("FILL",s?"currentColor":"none")}</button>
+  <button class="ib" data-known="${esc(t[0])}" aria-pressed="${k}" aria-label="Mark ${esc(t[0])} as known">${CHECK.replace("FILL",k?"currentColor":"none").replace("STROKE",k?"var(--surface)":"currentColor")}</button></div></div>
+  ${explain(t,true)}${exHTML(t)}
+  <div class="sayrow"><p>${esc(t[5])}</p><button class="copy" data-copy="${esc(t[5])}">Copy</button></div></article>`}
+function list(){
+  const ql=q.trim().toLowerCase();
+  const hay=t=>{const e=X[t[0]];return (t[0]+" "+t[2]+" "+t[3]+" "+(e?e[0]+" "+e[1].map(x=>x.join(" ")).join(" "):t[4])).toLowerCase()};
+  const hit=t=>inFilter(t)&&(!ql||hay(t).includes(ql));
+  let total=0;
+  const html=C.map(c=>{const items=T.filter(t=>t[1]===c[0]&&hit(t));total+=items.length;if(!items.length)return "";
+    return `<section class="cat" id="${c[0]}"><div class="cathead"><h2>${esc(c[1])}</h2><p>${esc(c[2])}</p><button class="btn" data-drill="${c[0]}">Practise these ${items.length}</button></div><div class="grid">${items.map(entry).join("")}</div></section>`}).join("");
+  $("#list").innerHTML=total?html:`<div class="empty"><h2>No terms match “${esc(q)}”</h2><p>Try a shorter word, a synonym, or clear the topic filter.</p><button class="btn pri" data-clear>Clear search and filter</button></div>`;
+  $("#found").textContent=`${total} term${total===1?"":"s"}`}
+function setFilter(f){filter=f;build();card(true);side();chips();list()}
+function setMode(m){mode=m;save();document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.mode===m));card();list()}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.a)act(b.dataset.a);
+  else if(b.dataset.mode)setMode(b.dataset.mode);
+  else if(b.dataset.f){setFilter(b.dataset.f)}
+  else if(b.dataset.drill){setFilter(b.dataset.drill);$("#practice").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}
+  else if(b.dataset.star){const n=b.dataset.star;star.has(n)?star.delete(n):star.add(n);save();chips();list();if(filter==="star"){build();card()}}
+  else if(b.dataset.known){const n=b.dataset.known;known.has(n)?known.delete(n):known.add(n);save();side();chips();list();if(queue[0]===n||!known.has(n)){build();card()}}
+  else if(b.dataset.copy!==undefined){const txt=b.dataset.copy;Promise.resolve().then(()=>navigator.clipboard.writeText(txt)).then(()=>{b.textContent="Copied";setTimeout(()=>b.textContent="Copy",1500)}).catch(()=>{b.textContent="Select and copy";setTimeout(()=>b.textContent="Copy",2000)})}
+  else if(b.id==="pick"){const r=$("#rows"),o=r.classList.toggle("open");b.setAttribute("aria-expanded",o);b.textContent=o?"Hide topics":"Choose a topic to drill"}
+  else if(b.hasAttribute("data-clear")){q="";$("#q").value="";setFilter("all")}
+});
+let tm;$("#q").addEventListener("input",e=>{clearTimeout(tm);tm=setTimeout(()=>{q=e.target.value;list()},120)});
+document.addEventListener("keydown",e=>{
+  if(e.target.matches("input,textarea")||e.metaKey||e.ctrlKey||e.altKey)return;
+  const r=$("#practice").getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;
+  if(e.key===" "&&!shown&&queue.length){e.preventDefault();act("reveal")}
+  else if(e.key==="1"&&shown)act("again");
+  else if(e.key==="2"&&shown)act("know");
+  else if(e.key==="ArrowRight")act("skip")});
+$("#intro").textContent=`All ${T.length} terms you’re likely to hear in a product or UX design interview, across ${C.length} topics. Each one in plain words and in the technical version, with an everyday comparison, ${Object.values(X).reduce((a,v)=>a+v[1].length,0)} real product examples explained, and a sentence you can say out loud to a senior designer or PM.`;
+build();setMode(mode);side();chips();card();
+}
+</script>
+</body>
+</html>
